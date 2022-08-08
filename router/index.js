@@ -38,13 +38,13 @@ recipesRouter.get("/random-meal", async function (req, res) {
 //   res.json(responseObject.payload);
 // });
 
-recipesRouter.get("/filtered/:id", async function (req, res) {
-  const filters = req.params.id;
-  const result = await filterMealByIngredients(filters);
-  const responseObject = { success: true, payload: result };
-  res.json(responseObject);
-  //console.log(responseObject)
-});
+// recipesRouter.get("/filtered/:id", async function (req, res) {
+//   const filters = req.params.id;
+//   const result = await filterMealByIngredients(filters);
+//   const responseObject = { success: true, payload: result };
+//   res.json(responseObject);
+//   //console.log(responseObject)
+// });
 
 recipesRouter.get("/ingredients-list/:id", async function (req, res) {
   const searchTerm = String(req.params.id);
@@ -61,7 +61,6 @@ recipesRouter.get("/ingredients-category", async function (req, res) {
   const result = await getMealByIngredients(ingredients, category);
   const responseObject = { success: true, payload: result };
   res.json(responseObject);
-  console.log(responseObject);
 });
 
 /*

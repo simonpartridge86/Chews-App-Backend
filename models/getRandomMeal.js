@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { formatResults } from "./formatResults.js";
 
 //GET RANDOM MEAL
 
@@ -45,7 +46,9 @@ async function getRandomMainMeal() {
       `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomRecipe}`
     )
   ).json();
-  return finalRandomRecipe.meals[0];
+
+  const selectedMeal = finalRandomRecipe.meals[0];
+  return formatResults(selectedMeal);
 }
 
 // This is the fetch for random breakfast
@@ -68,7 +71,8 @@ async function getRandomBreakfast() {
     )
   ).json();
 
-  return finalRandomRecipe.meals[0];
+  const selectedMeal = finalRandomRecipe.meals[0];
+  return formatResults(selectedMeal);
 }
 
 //GET RANDOM DESSERT
@@ -89,5 +93,6 @@ async function getRandomDessert() {
     )
   ).json();
 
-  return finalRandomRecipe.meals[0];
+  const selectedMeal = finalRandomRecipe.meals[0];
+  return formatResults(selectedMeal);
 }
