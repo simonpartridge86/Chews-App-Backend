@@ -10,11 +10,7 @@ import {
 } from "../models/index.js";
 import { getIngredientsBySearch } from "../models/getIngredients.js";
 import { getMealByIngredients } from "../models/getMealByIngredients.js";
-import {
-  getRandomMainMeal,
-  getRandomBreakfast,
-  getRandomDessert,
-} from "../models/random.js";
+import { getRandomMeal } from "../models/getRandomMeal.js";
 
 const recipesRouter = express.Router();
 
@@ -23,23 +19,24 @@ recipesRouter.get("/recipes", async function (req, res) {
   res.json(responseObject);
 });
 
-recipesRouter.get("/random/main", async function (req, res) {
-  const result = await getRandomMainMeal();
+recipesRouter.get("/random-meal", async function (req, res) {
+  const mealType = String(req.query.meal);
+  const result = await getRandomMeal(mealType);
   const responseObject = { success: true, payload: result };
   res.json(responseObject.payload);
 });
 
-recipesRouter.get("/random/breakfast", async function (req, res) {
-  const result = await getRandomBreakfast();
-  const responseObject = { success: true, payload: result };
-  res.json(responseObject.payload);
-});
+// recipesRouter.get("/random/breakfast", async function (req, res) {
+//   const result = await getRandomBreakfast();
+//   const responseObject = { success: true, payload: result };
+//   res.json(responseObject.payload);
+// });
 
-recipesRouter.get("/random/dessert", async function (req, res) {
-  const result = await getRandomDessert();
-  const responseObject = { success: true, payload: result };
-  res.json(responseObject.payload);
-});
+// recipesRouter.get("/random/dessert", async function (req, res) {
+//   const result = await getRandomDessert();
+//   const responseObject = { success: true, payload: result };
+//   res.json(responseObject.payload);
+// });
 
 recipesRouter.get("/filtered/:id", async function (req, res) {
   const filters = req.params.id;
@@ -65,8 +62,7 @@ recipesRouter.get("/ingredients-category", async function (req, res) {
   const responseObject = { success: true, payload: result };
   res.json(responseObject);
   console.log(responseObject);
-})
-
+});
 
 /*
 recipesRouter.get('/area/:id', async function (req, res){
