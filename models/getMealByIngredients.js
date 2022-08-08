@@ -1,3 +1,6 @@
+import fetch from "node-fetch";
+
+
 //https://www.themealdb.com/api/json/v2/9973533/filter.php?i=chicken_breast,garlic,salt
 
 // //FILTER MEALS BY INGREDIENTS AND GET LIST OF FULL RECIPES
@@ -21,16 +24,16 @@
 // }
 
 //FILTER MEAL BY INGREDIENT AND CATEGORY
-export async function filterMealByAreaAndCategory(ingredients, category) {
+export async function getMealByIngredients(ingredients, category) {
   console.log("arguments:", ingredients, category);
 
   let searchCategory;
   if (category === "main") {
-    searchCategory = [salmon, pork, etc];
+    searchCategory = ["Seafood", "Beef", "Chicken", "Vegetarian", "Goat", "Lamb", "Pasta", "Vegan"];
   } else if (category === "breakfast") {
-    searchCategory = [breakfast];
+    searchCategory = ['breakfast'];
   } else if (category === "dessert") {
-    searchCategory = [dessert];
+    searchCategory = ['dessert'];
   }
 
   //FIRST FETCH FOR RECIPES THAT MATCH INGREDIENTS
@@ -47,7 +50,7 @@ export async function filterMealByAreaAndCategory(ingredients, category) {
     );
     const newResult = await newUrl.json();
     console.log(newResult);
-    if (newResult.meals[0].strCategory === category) {
+    if (searchCategory.includes(newResult.meals[0].strCategory)) {
       promises.push(newResult.meals[0]);
     }
   }

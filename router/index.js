@@ -1,5 +1,6 @@
 import { mealRan } from "../libs/random-recipes.js";
 import express, { Router } from "express";
+
 import {
   filterMealByIngredients,
   filterMealByArea,
@@ -8,6 +9,7 @@ import {
   filterMealByAreaAndCategory,
 } from "../models/index.js";
 import { getIngredientsBySearch } from "../models/getIngredients.js";
+import { getMealByIngredients } from "../models/getMealByIngredients.js";
 import {
   getRandomMainMeal,
   getRandomBreakfast,
@@ -54,6 +56,17 @@ recipesRouter.get("/ingredients-list/:id", async function (req, res) {
   res.json(responseObject);
   console.log(responseObject);
 });
+
+recipesRouter.get("/ingredients-category", async function (req, res) {
+  const ingredients = String(req.query.ingredients);
+  const category = String(req.query.category);
+  console.log(`Ingredients, category, ${ingredients}, ${category}`);
+  const result = await getMealByIngredients(ingredients, category);
+  const responseObject = { success: true, payload: result };
+  res.json(responseObject);
+  console.log(responseObject);
+})
+
 
 /*
 recipesRouter.get('/area/:id', async function (req, res){
