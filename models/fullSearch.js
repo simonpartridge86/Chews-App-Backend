@@ -1,7 +1,18 @@
 import fetch from 'node-fetch';
 
 /* GRAND UNIFIED SEARCH FUNCTION
-- 4 filter parameters: 
+- router to expect a form of
+ https://chews-backend.herokuapp.com/full-recipe-search?ingredients={onion,garlic,...}&category={main}&diets={vegetarian,gluten_free,...}&areas={italian,american}
+- Different processes depending on if different parameters are defined
+- Ingredient search called first to narrow down options
+  - Only concise list given by MealDB so go through each by id to get full details
+- Filter the ingredients in each resulting recipe for the diets parameter list based on database results
+  - Each dietary requirement is true if suitable for diet, false otherwise
+  - The dietary requirements will need to be separated out first by splice method?
+- Finally, check the strArea for each recipe still in the results array (ie not filtered out)
+  - Any area element (again separated out by string method) provided is enough for the recipe to pass
+- If no result is provided, prompt to provide less detailed search
+  - Restrict results to 5 for frontend
 */
 
 // Add filters

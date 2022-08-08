@@ -9,7 +9,8 @@
     "dev": "nodemon app.js",
     "create-i": "node ./db/ingredients-table/create.js",
     "populate-i": "node ./db/ingredients-table/populate.js",
-    "drop-i": "node ./db/ingredients-table/drop.js"
+    "drop-i": "node ./db/ingredients-table/drop.js",
+    "dietary-i": "node ./db/ingredients-table/modifyDietaryData.js"
   },
   "type": "module",
   "repository": {

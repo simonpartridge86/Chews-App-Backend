@@ -1,9 +1,11 @@
 import { query } from "../index.js";
 import fetch from "node-fetch";
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Populate a table with ingredient names, but dietary preferences set to default values of true
 
-const ingredientsData = await fetch('https://www.themealdb.com/api/json/v2/9973533/list.php?i=list');
+const ingredientsData = await fetch(process.env.MEALDB_URL + '/list.php?i=list');
 const result = await ingredientsData.json();
 
 export async function populateIngredientsTable(){

@@ -2,21 +2,31 @@ import { query } from "../index.js";
 import { meatsSql, fishSql, shellfishSql, dairySql, otherAnimalSql, glutenSql } from '../../libs/ingredient-sql-strings.js';
 
 export async function modifyIngredientDietaryData(){
-    let allNames = await query('SELECT name FROM ingredients');
-    let veganSearch = await query('SELECT name FROM ingredients WHERE ' + meatsSql + fishSql +shellfishSql + dairySql + otherAnimalSql + ';');
-    let glutenFreeSearch = await query('SELECT name FROM ingredients WHERE ' + glutenSql + ';');
-    let dairyFreeSearch = await query('SELECT name FROM ingredients WHERE ' + dairySql + ';');
-    let vegetarianSearch = await query('SELECT name FROM ingredients WHERE ' + dairySql + ';');
+    const allNames = await query('SELECT name FROM ingredients');
+    const dairyFreeSearch = await query('SELECT name FROM ingredients WHERE ' + dairySql + ';');
+    console.log('Line 7 complete');
+    const glutenFreeSearch = await query('SELECT name FROM ingredients WHERE ' + glutenSql + ';');
+    console.log('Line 9 complete');
+    //let testSearch = await query('SELECT name FROM ingredients WHERE ' + meatsSql + ';');
+    console.log('Line 11 complete');
+    const vegetarianSearch = await query('SELECT name FROM ingredients WHERE ' + meatsSql +  ' AND ' + fishSql + ' AND ' + shellfishSql + ';');
+    const veganSearch = await query('SELECT name FROM ingredients WHERE ' + meatsSql + ' AND ' + fishSql + ' AND ' + otherAnimalSql + ' AND ' + shellfishSql + ' AND ' + dairySql + `;`);
+    console.log('Line 15 complete');
+
+    // Map these objects onto an array by rows[i]
+
+    console.log(await veganSearch);
+    //' OR ' + otherAnimalSql + 
     
-    for (let i=0; i<allNames.length; i++) {
+    for (let ingredient in await allNamesResult) {
         const res = await query( 
             `UPDATE ingredients SET vegan=$2, gluten_free=$3, vegetarian=$4, dairy_free=$5
             WHERE name=$1 RETURNING *;`, [
-                allNames[i],
-                veganSearch.includes(allNames[i]), 
-                glutenFreeSearch.includes(allNames[i]), 
-                vegetarianSearch.includes(allNames[i]), 
-                dairyFreeSearch.includes(allNames[i])
+                allNamesResult[ingredient],
+                await veganResult.includes(await allNamesResult[ingredient]), 
+                await glutenFreeResult.includes(await allNamesResult[ingredient]), 
+                await vegetarianResult.includes(await allNamesResult[ingredient]), 
+                await dairyFreeResult.includes(await allNamesResult[ingredient])
             ]
         );
     console.log(res.rows[0].name, "has dietary properties vegan: ", res.rows[0].vegan,
@@ -25,3 +35,5 @@ export async function modifyIngredientDietaryData(){
        ", and dairy free: ", res.rows[0].dairy_free);
     }
 }
+
+modifyIngredientDietaryData();
