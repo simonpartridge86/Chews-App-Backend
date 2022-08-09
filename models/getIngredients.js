@@ -1,6 +1,6 @@
 import { pool as ingredientPool } from "../db/index.js";
 
-export async function getIngredientsBySearch(searchTerm) {
+export async function getIngredients(searchTerm) {
   const result = await ingredientPool.query(
     `SELECT * FROM ingredients WHERE
   LOWER(name) LIKE LOWER($1||'%') LIMIT 5;`,

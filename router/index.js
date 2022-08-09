@@ -1,4 +1,3 @@
-import { mealRan } from "../libs/random-recipes.js";
 import express, { Router } from "express";
 
 import {
@@ -6,7 +5,7 @@ import {
   filterMealByCategory,
   filterMealByAreaAndCategory,
 } from "../models/index.js";
-import { getIngredientsBySearch } from "../models/getIngredients.js";
+import { getIngredients } from "../models/getIngredients.js";
 import { getMealByIngredients } from "../models/getMealByIngredients.js";
 import { getRandomMeal } from "../models/getRandomMeal.js";
 
@@ -29,7 +28,7 @@ recipesRouter.get("/random-meal", async function (req, res) {
 
 recipesRouter.get("/ingredients-list/:id", async function (req, res) {
   const searchTerm = String(req.params.id);
-  const result = await getIngredientsBySearch(searchTerm);
+  const result = await getIngredients(searchTerm);
   const responseObject = { success: true, payload: result };
   res.json(responseObject);
   console.log(responseObject);
