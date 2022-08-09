@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 /* GRAND UNIFIED SEARCH FUNCTION
 - router to expect a form of
- https://chews-backend.herokuapp.com/full-recipe-search?ingredients={onion,garlic,...}&category={main}&diets={vegetarian,gluten_free,...}&areas={italian,american}
+ https://chews-backend.herokuapp.com/full-recipe-search?ingredients={onion,garlic,...}&category={main}&diets={vegetarian,gluten_free,...}&area={italian}
 - Different processes depending on if different parameters are defined
 - Ingredient search called first to narrow down options
   - Only concise list given by MealDB so go through each by id to get full details
@@ -15,21 +15,34 @@ import fetch from 'node-fetch';
   - Restrict results to 5 for frontend
 */
 
+/* REVISED PLAN
+- Dietary requirements will initially restricted to vegan, vegetarian, seafood
+  - These accessed by mealdb categorisation - you may choose only one
+  - This means that this should be dealt with first if there is a diets parameter defined
+  - And if there is one defined, category is skipped?
+- Only one cuisine area may be chosen - this can be next chosen
+- Category as in previous functions
+*/
+
 // Add filters
-export async function getMealComplete(ingredients, category, diets, areas) {
-    console.log("arguments:", ingredients, category, diets, areas);
-    
-    if (ingredients && category && diets && areas) {
-        return []
-    } else if (ingredients && category) {
-        return []
-    } else if (category && diets && areas){
-        return []
-    } else if (category) {
-        return []
-    } else{
-        return {success: false, code: 400,
-             message: 'Not enough search parameters defined. If you are seeing this in the Chews App, please contact The Baristacrats support'}
+export async function getMealComplete(ingredients, category, diets, area) {
+    console.log("arguments:", ingredients, category, diets, area);
+    if(!category) {
+      return {success: false, code: 400,
+        message: 'Not enough search parameters defined. If you are seeing this in the Chews App, please contact The Baristacrats support'};
+    } else if (diets) {
+      let selectionArray1 = dietarySelection(diets);
+      let selectionArray2 = ingredientsSelection(selectionArray1, ingredients);
+      return areaSelection(selectionArray2, area);
+    } else if (ingredients) {
+      let selectionArray1 = categorySelection(category);
+      let selectionArray2 = ingredientsSelection(selectionArray1, ingredients);
+      return areaSelection(selectionArray2, area);
+    } else if (area) {
+      let selectionArray1 = categorySelection(category);
+      return areaSelection(selectionArray1);
+    } else {
+      return categorySelection(category);
     }
 
 }
