@@ -83,6 +83,7 @@ export function formatResults(mealObject) {
     .filter((e) => e.length > 10);
 
   return {
+    id: mealObject.idMeal,
     name: formattedName,
     ingredients: formattedIngredients,
     measures: formattedMeasures,
