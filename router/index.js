@@ -13,6 +13,7 @@ import {
   getRandomBreakfast,
   getRandomDessert,
 } from "../models/random.js";
+import { categorySelection, dietarySelection } from '../models/fullSearch.js';
 
 const recipesRouter = express.Router();
 
@@ -35,6 +36,12 @@ recipesRouter.get("/random/breakfast", async function (req, res) {
 
 recipesRouter.get("/random/dessert", async function (req, res) {
   const result = await getRandomDessert();
+  const responseObject = { success: true, payload: result };
+  res.json(responseObject.payload);
+});
+
+recipesRouter.get("/test-searches", async function (req, res) {
+  const result = await dietarySelection('vegan');
   const responseObject = { success: true, payload: result };
   res.json(responseObject.payload);
 });
