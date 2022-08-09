@@ -2,10 +2,8 @@ import { mealRan } from "../libs/random-recipes.js";
 import express, { Router } from "express";
 
 import {
-  filterMealByIngredients,
   filterMealByArea,
   filterMealByCategory,
-  ingredientList,
   filterMealByAreaAndCategory,
 } from "../models/index.js";
 import { getIngredientsBySearch } from "../models/getIngredients.js";
@@ -14,29 +12,12 @@ import { getRandomMeal } from "../models/getRandomMeal.js";
 
 const recipesRouter = express.Router();
 
-recipesRouter.get("/recipes", async function (req, res) {
-  const responseObject = { success: true, payload: mealRan };
-  res.json(responseObject);
-});
-
 recipesRouter.get("/random-meal", async function (req, res) {
   const mealType = String(req.query.meal);
   const result = await getRandomMeal(mealType);
-  const responseObject = { success: true, payload: result };
-  res.json(responseObject.payload);
+  const responseObject = { success: true, payload: [result] };
+  res.json(responseObject);
 });
-
-// recipesRouter.get("/random/breakfast", async function (req, res) {
-//   const result = await getRandomBreakfast();
-//   const responseObject = { success: true, payload: result };
-//   res.json(responseObject.payload);
-// });
-
-// recipesRouter.get("/random/dessert", async function (req, res) {
-//   const result = await getRandomDessert();
-//   const responseObject = { success: true, payload: result };
-//   res.json(responseObject.payload);
-// });
 
 // recipesRouter.get("/filtered/:id", async function (req, res) {
 //   const filters = req.params.id;
