@@ -37,6 +37,7 @@ async function getRandomMainMeal() {
   }
 
   let recipeArray = promises.flat();
+  console.log(recipeArray);
   let randomResult = Math.floor(Math.random() * recipeArray.length);
   const randomRecipe = recipeArray[randomResult].idMeal;
 
@@ -48,7 +49,7 @@ async function getRandomMainMeal() {
   ).json();
 
   const selectedMeal = finalRandomRecipe.meals[0];
-  return formatResults(selectedMeal);
+  return formatResults([selectedMeal]);
 }
 
 // This is the fetch for random breakfast
@@ -72,7 +73,7 @@ async function getRandomBreakfast() {
   ).json();
 
   const selectedMeal = finalRandomRecipe.meals[0];
-  return formatResults(selectedMeal);
+  return formatResults([selectedMeal]);
 }
 
 //GET RANDOM DESSERT
@@ -94,5 +95,5 @@ async function getRandomDessert() {
   ).json();
 
   const selectedMeal = finalRandomRecipe.meals[0];
-  return formatResults(selectedMeal);
+  return formatResults([selectedMeal]);
 }

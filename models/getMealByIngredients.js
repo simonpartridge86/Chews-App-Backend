@@ -5,7 +5,8 @@ import { formatResults } from "./formatResults.js";
 
 //FILTER MEAL BY INGREDIENT AND CATEGORY
 export async function getMealByIngredients(ingredients, category) {
-  console.log("arguments:", ingredients, category);
+  console.log("Ingredients:", ingredients);
+  console.log("Category:", category);
 
   let searchCategory;
   if (category === "main") {
@@ -43,8 +44,7 @@ export async function getMealByIngredients(ingredients, category) {
       promises.push(newResult.meals[0]);
     }
   }
-  const finality = await Promise.all(promises);
-  console.log(finality.length);
-  const randomIndex = Math.floor(Math.random() * finality.length);
-  return formatResults(finality[randomIndex]);
+  const finalResult = await Promise.all(promises);
+  console.log("Number of results:", finalResult.length);
+  return formatResults(finalResult);
 }
