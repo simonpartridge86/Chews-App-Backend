@@ -1,10 +1,12 @@
 import fetch from "node-fetch";
+import { formatResults } from "./formatResults.js";
 
 //https://www.themealdb.com/api/json/v2/9973533/filter.php?i=chicken_breast,garlic,salt
 
 //FILTER MEAL BY INGREDIENT AND CATEGORY
 export async function getMealByIngredients(ingredients, category) {
-  console.log("arguments:", ingredients, category);
+  console.log("Ingredients:", ingredients);
+  console.log("Category:", category);
 
   let searchCategory;
   if (category === "main") {
@@ -38,11 +40,11 @@ export async function getMealByIngredients(ingredients, category) {
       `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${id}`
     );
     const newResult = await newUrl.json();
-    console.log(newResult);
     if (searchCategory.includes(newResult.meals[0].strCategory)) {
       promises.push(newResult.meals[0]);
     }
   }
-  const finality = await Promise.all(promises);
-  return finality[0];
+  const finalResult = await Promise.all(promises);
+  console.log("Number of results:", finalResult.length);
+  return formatResults(finalResult);
 }

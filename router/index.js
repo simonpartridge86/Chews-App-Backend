@@ -1,68 +1,48 @@
-import { mealRan } from "../libs/random-recipes.js";
 import express, { Router } from "express";
 
 import {
-  filterMealByIngredients,
   filterMealByArea,
   filterMealByCategory,
-  ingredientList,
   filterMealByAreaAndCategory,
 } from "../models/index.js";
-import { getIngredientsBySearch } from "../models/getIngredients.js";
+import { getIngredients } from "../models/getIngredients.js";
 import { getMealByIngredients } from "../models/getMealByIngredients.js";
 import { getRandomMeal } from "../models/getRandomMeal.js";
 
 const recipesRouter = express.Router();
 
-recipesRouter.get("/recipes", async function (req, res) {
-  const responseObject = { success: true, payload: mealRan };
+//FETCHES INGREDIENTS FOR INGREDIENTS SELECTION PAGE
+recipesRouter.get("/ingredients-list/:id", async function (req, res) {
+  const searchTerm = String(req.params.id);
+  const result = await getIngredients(searchTerm);
+  const responseObject = { success: true, payload: result };
   res.json(responseObject);
 });
 
+//FETCHES RANDOM MEAL FOR RESULTS PAGE
 recipesRouter.get("/random-meal", async function (req, res) {
   const mealType = String(req.query.meal);
   const result = await getRandomMeal(mealType);
   const responseObject = { success: true, payload: result };
-  res.json(responseObject.payload);
-});
-
-// recipesRouter.get("/random/breakfast", async function (req, res) {
-//   const result = await getRandomBreakfast();
-//   const responseObject = { success: true, payload: result };
-//   res.json(responseObject.payload);
-// });
-
-// recipesRouter.get("/random/dessert", async function (req, res) {
-//   const result = await getRandomDessert();
-//   const responseObject = { success: true, payload: result };
-//   res.json(responseObject.payload);
-// });
-
-recipesRouter.get("/filtered/:id", async function (req, res) {
-  const filters = req.params.id;
-  const result = await filterMealByIngredients(filters);
-  const responseObject = { success: true, payload: result };
   res.json(responseObject);
-  //console.log(responseObject)
 });
 
-recipesRouter.get("/ingredients-list/:id", async function (req, res) {
-  const searchTerm = String(req.params.id);
-  const result = await getIngredientsBySearch(searchTerm);
-  const responseObject = { success: true, payload: result };
-  res.json(responseObject);
-  console.log(responseObject);
-});
-
+//FETCHES MEALS ACCORDING TO INGREDIENTS AND MEAL CATEGORY
 recipesRouter.get("/ingredients-category", async function (req, res) {
   const ingredients = String(req.query.ingredients);
   const category = String(req.query.category);
-  console.log(`Ingredients, category, ${ingredients}, ${category}`);
   const result = await getMealByIngredients(ingredients, category);
   const responseObject = { success: true, payload: result };
   res.json(responseObject);
-  console.log(responseObject);
 });
+
+// recipesRouter.get("/filtered/:id", async function (req, res) {
+//   const filters = req.params.id;
+//   const result = await filterMealByIngredients(filters);
+//   const responseObject = { success: true, payload: result };
+//   res.json(responseObject);
+//   //console.log(responseObject)
+// });
 
 /*
 recipesRouter.get('/area/:id', async function (req, res){
@@ -91,23 +71,23 @@ recipesRouter.get('/area/:id', async function (req, res){
 //look for the function that fetches both category and area
 // run function get 'url.com/area-category
 
-recipesRouter.get("/area-category", async function (req, res) {
-  const area = req.query.area;
-  const category = req.query.category;
-  console.log(area);
-  if (area && category) {
-    const result = await filterMealByAreaAndCategory(area, category);
-    const responseObject = { success: true, payload: result };
-    res.json(responseObject);
-  } else if (area) {
-    const result = await filterMealByArea(area);
-    const responseObject2 = { success: true, payload: result };
-    res.json(responseObject2);
-  } else if (category) {
-    const result = await filterMealByCategory(category);
-    const responseObject3 = { success: true, payload: result };
-    res.json(responseObject3);
-  }
-});
+// recipesRouter.get("/area-category", async function (req, res) {
+//   const area = req.query.area;
+//   const category = req.query.category;
+//   console.log(area);
+//   if (area && category) {
+//     const result = await filterMealByAreaAndCategory(area, category);
+//     const responseObject = { success: true, payload: result };
+//     res.json(responseObject);
+//   } else if (area) {
+//     const result = await filterMealByArea(area);
+//     const responseObject2 = { success: true, payload: result };
+//     res.json(responseObject2);
+//   } else if (category) {
+//     const result = await filterMealByCategory(category);
+//     const responseObject3 = { success: true, payload: result };
+//     res.json(responseObject3);
+//   }
+// });
 
 export { recipesRouter };
