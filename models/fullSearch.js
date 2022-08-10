@@ -26,6 +26,7 @@ import fetch from 'node-fetch';
 */
 
 export async function getRecipesFromSummaries(summaryArray) {
+  // Level 3
   console.log("STARTED");
   console.log(summaryArray);
   let promises = [];
@@ -46,6 +47,7 @@ export async function getRecipesFromSummaries(summaryArray) {
 }
 
 export async function dietarySelection(diets) {
+  // Level 2
   let summaryArray = [];
   // No breaks, so that the earlier cases do the later case logic too
   switch(diets) {
@@ -75,6 +77,7 @@ export async function dietarySelection(diets) {
 }
 
 export async function categorySelection(category) {
+  // Level 2
   console.log('Category is', category);
   let result;
   if (category === 'Main') {
@@ -112,23 +115,75 @@ export async function categorySelection(category) {
 }
 
 
-
-async function ingredientsSelection(resultsArray, ingredients) {
+export async function ingredientsSelection(resultsArray, ingredients) {
+  // Level 2
+  if(resultsArray === []) {
+    console.log('Empty array provided');
+    return resultsArray
+  } else {
   let newResultsArray = [];
   let chosenIngredients = ingredients.split(",");
   
   for (let i=0; i<resultsArray.length; i++) {
-    console.log()
+    const recipeIngredientList = [
+      resultsArray[i].strIngredient1,
+      resultsArray[i].strIngredient2,
+      resultsArray[i].strIngredient3,
+      resultsArray[i].strIngredient4,
+      resultsArray[i].strIngredient5,
+      resultsArray[i].strIngredient6,
+      resultsArray[i].strIngredient7,
+      resultsArray[i].strIngredient8,
+      resultsArray[i].strIngredient9,
+      resultsArray[i].strIngredient10,
+      resultsArray[i].strIngredient11,
+      resultsArray[i].strIngredient12,
+      resultsArray[i].strIngredient13,
+      resultsArray[i].strIngredient14,
+      resultsArray[i].strIngredient15,
+      resultsArray[i].strIngredient16,
+      resultsArray[i].strIngredient17,
+      resultsArray[i].strIngredient18,
+      resultsArray[i].strIngredient19,
+      resultsArray[i].strIngredient20,
+    ];
+    //let recipeMayContainIngredients = true;
+    if (chosenIngredients.every(ingredient => recipeIngredientList.includes(ingredient))) {
+      console.log(resultsArray[i].strMeal, 'Includes ', ingredients);
+      newResultsArray.push(resultsArray[i]);
+    } else {
+      console.log(resultsArray[i].strMeal, 'Doesnt include ', ingredients);
+    }
   }
   return newResultsArray
+  }
 }
 
-async function areaSelection(resultsArray, area) {
-  return newResultsArray
+export async function areaSelection(resultsArray, area) {
+  // Level 2
+  console.log(area);
+  
+  if(resultsArray === []) {
+    console.log('Empty array provided');
+    return resultsArray
+  } else {
+    let newResultsArray = [];
+    console.log(resultsArray[0].strArea)
+    for (let i=0; i<resultsArray.length; i++) {
+      if(resultsArray[i].strArea === area) {
+        console.log('Cuisine area is', area);
+        newResultsArray.push(resultsArray[i]);
+      } else {
+        console.log('Cuisine area is actually', resultsArray[i].strArea, 'not', area);
+      }
+    }
+    return newResultsArray
+  }
 }
 
 export async function getMealComplete(ingredients, category, diets, area) {
-    console.log("arguments:", ingredients, category, diets, area);
+  // Level 1
+  console.log("arguments:", ingredients, category, diets, area);
     if(!category) {
       return {success: false, code: 400,
         message: 'Not enough search parameters defined. If you are seeing this in the Chews App, please contact The Baristacrats support'};
