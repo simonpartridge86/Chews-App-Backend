@@ -4,7 +4,7 @@ import { getMealByIngredients } from "../models/getMealByIngredients.js";
 import { getIngredients } from "../models/getIngredients.js";
 import { getRandomMeal } from "../models/getRandomMeal.js";
 import { getMealComplete } from '../models/fullSearch.js';
-import { filterMealByAreaAndCategory, filterMealByArea, filterMealByCategory } from "../models/filterMealByAreaAndCategory.js";
+import { filterMealByAreaAndCategory, filterMealByArea, filterMealByCategory } from "../models/randomMealByAreaAndCategory.js";
 
 const recipesRouter = express.Router();
 
