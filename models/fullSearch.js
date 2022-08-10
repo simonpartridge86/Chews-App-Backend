@@ -28,7 +28,7 @@ import fetch from 'node-fetch';
 export async function getRecipesFromSummaries(summaryArray) {
   // Level 3
   console.log("STARTED");
-  console.log(summaryArray);
+  //console.log(summaryArray);
   let promises = [];
   for (let i in summaryArray) {
     //let id = summaryArray[i].idMeal;
@@ -51,20 +51,20 @@ export async function dietarySelection(diets) {
   let summaryArray = [];
   // No breaks, so that the earlier cases do the later case logic too
   switch(diets) {
-    case 'seafood':
+    case 'Seafood':
       const data1 = await fetch(
         `https://www.themealdb.com/api/json/v2/9973533/filter.php?c=seafood`
       );
       const result1 = await data1.json();
       summaryArray.push(result1.meals);
-      console.log(summaryArray[0]);
-    case 'vegetarian':
+      //console.log(summaryArray[0]);
+    case 'Vegetarian':
       const data2 = await fetch(
         `https://www.themealdb.com/api/json/v2/9973533/filter.php?c=vegetarian`
       );
       const result2 = await data2.json();
       summaryArray.push(result2.meals);
-    case 'vegan':
+    case 'Vegan':
       const data3 = await fetch(
         `https://www.themealdb.com/api/json/v2/9973533/filter.php?c=vegan`
       );
@@ -72,7 +72,7 @@ export async function dietarySelection(diets) {
       summaryArray.push(result3.meals);
   }
   //console.log(summaryArray);
-  const resultsArray = getRecipesFromSummaries(summaryArray.flat());
+  const resultsArray = await getRecipesFromSummaries(summaryArray.flat());
   return resultsArray
 }
 
@@ -108,7 +108,7 @@ export async function categorySelection(category) {
     summaryArray.push(newResult.meals);
   }
   // Now process the summary data into a workable structure
-  const newResultsArray = getRecipesFromSummaries(summaryArray.flat());
+  const newResultsArray = await getRecipesFromSummaries(summaryArray.flat());
   //console.log(Object.keys(newResultsArray[0]));
   
   return newResultsArray
@@ -117,6 +117,7 @@ export async function categorySelection(category) {
 
 export async function ingredientsSelection(resultsArray, ingredients) {
   // Level 2
+  console.log('check for nigredients: ', resultsArray);
   if(resultsArray === []) {
     console.log('Empty array provided');
     return resultsArray
@@ -162,6 +163,7 @@ export async function ingredientsSelection(resultsArray, ingredients) {
 export async function areaSelection(resultsArray, area) {
   // Level 2
   console.log(area);
+  console.log(resultsArray);
   
   if(resultsArray === []) {
     console.log('Empty array provided');
@@ -189,17 +191,17 @@ export async function getMealComplete(ingredients, category, diets, area) {
         message: 'Not enough search parameters defined. If you are seeing this in the Chews App, please contact The Baristacrats support'};
 
     } else if (diets) {
-      let selectionArray1 = dietarySelection(diets);
-      let selectionArray2 = ingredientsSelection(selectionArray1, ingredients);
-      return areaSelection(selectionArray2, area);
+      let selectionArray1 = await dietarySelection(diets);
+      let selectionArray2 = await ingredientsSelection(selectionArray1, ingredients);
+      return await areaSelection(selectionArray2, area);
 
     } else if (ingredients) {
-      let selectionArray1 = categorySelection(category);
-      let selectionArray2 = ingredientsSelection(selectionArray1, ingredients);
-      return areaSelection(selectionArray2, area);
+      let selectionArray1 = await categorySelection(category);
+      let selectionArray2 = await ingredientsSelection(selectionArray1, ingredients);
+      return await areaSelection(selectionArray2, area);
 
     } else if (area) {
-      let selectionArray1 = categorySelection(category);
+      let selectionArray1 = await categorySelection(category);
       return areaSelection(selectionArray1);
 
     } else {

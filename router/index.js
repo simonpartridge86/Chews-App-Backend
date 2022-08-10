@@ -13,7 +13,7 @@ import {
   getRandomBreakfast,
   getRandomDessert,
 } from "../models/random.js";
-import { categorySelection, dietarySelection, ingredientsSelection, areaSelection } from '../models/fullSearch.js';
+import { categorySelection, dietarySelection, ingredientsSelection, areaSelection, getMealComplete } from '../models/fullSearch.js';
 
 const recipesRouter = express.Router();
 
@@ -41,7 +41,7 @@ recipesRouter.get("/random/dessert", async function (req, res) {
 });
 
 recipesRouter.get("/test-searches", async function (req, res) {
-  const recipeArray = [
+  /*const recipeArray = [
     {
     "idMeal": "52772",
     "strMeal": "Teriyaki Chicken Casserole",
@@ -97,8 +97,8 @@ recipesRouter.get("/test-searches", async function (req, res) {
     "strCreativeCommonsConfirmed": null,
     "dateModified": null
     }
-    ];
-  const result = await areaSelection(recipeArray, 'Japanese');
+    ];*/
+  const result = await getMealComplete('Onion', 'Main', 'Seafood', 'Spanish');
   const responseObject = { success: true, payload: result };
   res.json(responseObject.payload);
 });
