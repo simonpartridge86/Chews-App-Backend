@@ -70,6 +70,10 @@ export async function dietarySelection(diets) {
       );
       const result3 = await data3.json();
       summaryArray.push(result3.meals);
+      break;
+    default:
+      console.log('Diet requested either is invalid or not currently implemented')
+
   }
   //console.log(summaryArray);
   const resultsArray = await getRecipesFromSummaries(summaryArray.flat());
@@ -117,8 +121,12 @@ export async function categorySelection(category) {
 
 export async function ingredientsSelection(resultsArray, ingredients) {
   // Level 2
-  console.log('check for nigredients: ', resultsArray);
-  if(resultsArray === []) {
+  console.log('check for nigredients: ', ingredients);
+  if (!ingredients) {
+    console.log('No ingredients supplied');
+    return resultsArray
+  }
+  else if(resultsArray === []) {
     console.log('Empty array provided');
     return resultsArray
   } else {
@@ -163,9 +171,11 @@ export async function ingredientsSelection(resultsArray, ingredients) {
 export async function areaSelection(resultsArray, area) {
   // Level 2
   console.log(area);
-  console.log(resultsArray);
-  
-  if(resultsArray === []) {
+  //console.log(resultsArray);
+  if (!area) {
+    console.log('No area supplied');
+    return resultsArray
+  } else if(resultsArray.length === 0) {
     console.log('Empty array provided');
     return resultsArray
   } else {
@@ -202,7 +212,7 @@ export async function getMealComplete(ingredients, category, diets, area) {
 
     } else if (area) {
       let selectionArray1 = await categorySelection(category);
-      return areaSelection(selectionArray1);
+      return areaSelection(selectionArray1, area);
 
     } else {
       return categorySelection(category);

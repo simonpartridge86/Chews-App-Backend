@@ -98,7 +98,7 @@ recipesRouter.get("/test-searches", async function (req, res) {
     "dateModified": null
     }
     ];*/
-  const result = await getMealComplete('Onion', 'Main', 'Seafood', 'Spanish');
+  const result = await getMealComplete('Potatoes', 'Main', 'Seafood', 'British');
   const responseObject = { success: true, payload: result };
   res.json(responseObject.payload);
 });
