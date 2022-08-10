@@ -23,30 +23,7 @@ export async function filterMealByIngredients(filters) {
   return finality;
 }
 
-//FILTER MEAL BY AREA AND BY CATEGORY
-export async function filterMealByAreaAndCategory(area, category) {
-  console.log("arguments:", area, category);
-  //FIRST FETCH
-  const data = await fetch(
-    `https://www.themealdb.com/api/json/v2/9973533/filter.php?a=${area}`
-  );
-  const result = await data.json();
-  //SECOND FETCH
-  let promises = [];
-  for (let i in await result.meals) {
-    let id = result.meals[i].idMeal;
-    const newUrl = await fetch(
-      `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${id}`
-    );
-    const newResult = await newUrl.json();
-    console.log(newResult);
-    if (newResult.meals[0].strCategory === category) {
-      promises.push(newResult.meals[0]);
-    }
-  }
-  const finality = await Promise.all(promises);
-  return finality;
-}
+
 
 /* PLAN AREA and CUISINE TYPE FILTERS
 - Make filter by area and category function
@@ -82,42 +59,4 @@ let ingrList = [];
 return Promise.all(ingrList);
 }
 
-
-export async function filterMealByArea(area) {
-
-  const data = await fetch(
-    `https://www.themealdb.com/api/json/v2/9973533/filter.php?a=${area}`
-  );
-  const result = await data.json();
-  let promises = [];
-  for (let i in await result.meals) {
-    let id = result.meals[i].idMeal;
-    const newUrl = await fetch(
-      `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${id}`
-    );
-    const newResult = await newUrl.json();
-      promises.push(newResult.meals[0]);
-  }
-  const finality = await Promise.all(promises);
-  return finality;
-}
-
-export async function filterMealByCategory(category) {
-
-  const data = await fetch(
-    `https://www.themealdb.com/api/json/v2/9973533/filter.php?c=${category}`
-  );
-  const result = await data.json();
-  let promises = [];
-  for (let i in await result.meals) {
-    let id = result.meals[i].idMeal;
-    const newUrl = await fetch(
-      `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${id}`
-    );
-    const newResult = await newUrl.json();
-      promises.push(newResult.meals[0]);
-  }
-  const finality = await Promise.all(promises);
-  return finality;
-}
 
