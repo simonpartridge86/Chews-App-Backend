@@ -103,6 +103,16 @@ recipesRouter.get("/test-searches", async function (req, res) {
   res.json(responseObject.payload);
 });
 
+recipesRouter.get("/complete-search", async function (req, res) {
+  const area = req.query.area;
+  const category = req.query.category;
+  const dietary = req.query.dietary;
+  const ingredients = req.query.ingredients;
+  const result = await getMealComplete(area, category, dietary, ingredients);
+  const responseObject = { success: true, payload: result };
+  res.json(responseObject.payload);
+});
+
 recipesRouter.get("/filtered/:id", async function (req, res) {
   const filters = req.params.id;
   const result = await filterMealByIngredients(filters);
