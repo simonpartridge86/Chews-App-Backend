@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "create-i": "node ./db/ingredients-table/create.js",
     "populate-i": "node ./db/ingredients-table/populate.js",
-    "drop-i": "node ./db/ingredients-table/drop.js"
+    "drop-i": "node ./db/ingredients-table/drop.js",
+    "dietary-i": "node ./db/ingredients-table/modifyDietaryData.js"
   },
   "type": "module",
   "repository": {
@@ -25,10 +26,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "jest": "^28.1.1",
     "express": "^4.18.1",
     "node-fetch": "^3.2.10",
-    "nodemon": "^2.0.19",
     "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4",
+    "jest": "^28.1.3"
   }
 }

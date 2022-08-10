@@ -1,7 +1,10 @@
 import {query} from "../index.js";
 
+// Construct a table with ingredient name and dietary preference columns
+
 export async function createIngredientsTable(){
-   const sqlstring = `CREATE TABLE IF NOT EXISTS ingredients (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, name TEXT);`;
+   const sqlstring = `CREATE TABLE IF NOT EXISTS ingredients (
+      id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, name TEXT, vegan BOOLEAN, gluten_free BOOLEAN, vegetarian BOOLEAN, dairy_free BOOLEAN);`;
    const res = await query (sqlstring);
    console.log(res.command, "table created");
 }
