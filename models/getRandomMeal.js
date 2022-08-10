@@ -1,9 +1,22 @@
 import fetch from "node-fetch";
+import { formatResults } from "./formatResults.js";
 
-//GET RANDOM MAIN MEAL
+//GET RANDOM MEAL
 
-//First fetch to get list of results:
-export async function getRandomMainMeal() {
+export async function getRandomMeal(category) {
+  if (category === "main") {
+    return await getRandomMainMeal();
+  } else if (category === "breakfast") {
+    return await getRandomBreakfast();
+  } else if (category === "dessert") {
+    return await getRandomDessert();
+  }
+  return;
+}
+
+// GET RANDOM MAIN
+async function getRandomMainMeal() {
+  //First fetch to get list of results:
   const result = await Promise.all([
     fetch("https://www.themealdb.com/api/json/v2/9973533/filter.php?c=Seafood"),
     fetch("https://www.themealdb.com/api/json/v2/9973533/filter.php?c=Beef"),
@@ -23,9 +36,10 @@ export async function getRandomMainMeal() {
     promises.push(newResult.meals);
   }
 
-  let randomResult = Math.floor(Math.random() * result.length);
-  const randomRecipe = promises.flat()[randomResult].idMeal;
-  console.log(randomRecipe);
+  let recipeArray = promises.flat();
+  console.log(recipeArray);
+  let randomResult = Math.floor(Math.random() * recipeArray.length);
+  const randomRecipe = recipeArray[randomResult].idMeal;
 
   //Second fetch to get individual random result full recipe:
   const finalRandomRecipe = await (
@@ -33,12 +47,15 @@ export async function getRandomMainMeal() {
       `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomRecipe}`
     )
   ).json();
-  return finalRandomRecipe.meals[0];
+
+  const selectedMeal = finalRandomRecipe.meals[0];
+  return formatResults([selectedMeal]);
 }
 
 // This is the fetch for random breakfast
 
-export async function getRandomBreakfast() {
+//GET RANDOM BREAKFAST
+async function getRandomBreakfast() {
   const result = await (
     await fetch(
       "https://www.themealdb.com/api/json/v2/9973533/filter.php?c=Breakfast"
@@ -55,10 +72,12 @@ export async function getRandomBreakfast() {
     )
   ).json();
 
-  return finalRandomRecipe.meals[0];
+  const selectedMeal = finalRandomRecipe.meals[0];
+  return formatResults([selectedMeal]);
 }
 
-export async function getRandomDessert() {
+//GET RANDOM DESSERT
+async function getRandomDessert() {
   const result = await (
     await fetch(
       "https://www.themealdb.com/api/json/v2/9973533/filter.php?c=Dessert"
@@ -75,5 +94,6 @@ export async function getRandomDessert() {
     )
   ).json();
 
-  return finalRandomRecipe.meals[0];
+  const selectedMeal = finalRandomRecipe.meals[0];
+  return formatResults([selectedMeal]);
 }
