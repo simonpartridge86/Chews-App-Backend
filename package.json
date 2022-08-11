@@ -1,0 +1,38 @@
+{
+  "name": "chews-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "create-i": "node ./db/ingredients-table/create.js",
+    "populate-i": "node ./db/ingredients-table/populate.js",
+    "drop-i": "node ./db/ingredients-table/drop.js",
+    "dietary-i": "node ./db/ingredients-table/modifyDietaryData.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauriziomonti/Baristacrats-backend-final-project.git"
+  },
+  "author": "The Baristacrats",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mauriziomonti/Baristacrats-backend-final-project/issues"
+  },
+  "homepage": "https://github.com/mauriziomonti/Baristacrats-backend-final-project#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.10",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4",
+    "jest": "^28.1.3"
+  }
+}
