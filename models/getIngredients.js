@@ -10,5 +10,12 @@ export async function getIngredients(searchTerm) {
   result.rows.map(async (ingr) => {
     ingrList.push(ingr.name);
   });
-  return Promise.all(ingrList);
+  
+  let finality = await Promise.all(ingrList);
+  
+  if (finality.length > 0) {
+    return finality;
+  } else {
+    return null;
+  }
 }

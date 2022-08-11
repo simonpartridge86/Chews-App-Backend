@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 import { formatResults } from "./formatResults.js";
 
-//https://www.themealdb.com/api/json/v2/9973533/filter.php?i=chicken_breast,garlic,salt
 
 //FILTER MEAL BY INGREDIENT AND CATEGORY
 export async function getMealByIngredients(ingredients, category) {
@@ -46,5 +45,10 @@ export async function getMealByIngredients(ingredients, category) {
   }
   const finalResult = await Promise.all(promises);
   console.log("Number of results:", finalResult.length);
-  return formatResults(finalResult);
+  if (finalResult.length > 0) {
+    return formatResults(finalResult);
+  } else {
+    return null
+  }
+  
 }

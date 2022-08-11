@@ -23,9 +23,13 @@ export async function filterMealByAreaAndCategory(area, category) {
       }
     }
     const finality = await Promise.all(promises);
-    let randomResult = Math.floor(Math.random() * finality.length);
+
+    if (finality.length > 0) {
+      let randomResult = Math.floor(Math.random() * finality.length);
     return formatResults([finality[randomResult]]);
-    //return finality
+    } else {
+      return null
+    }
   }
 
 export async function filterMealByArea(area) {
@@ -44,9 +48,14 @@ export async function filterMealByArea(area) {
         promises.push(newResult.meals[0]);
     }
     const finality = await Promise.all(promises);
-    let randomResult = Math.floor(Math.random() * finality.length);
-    return formatResults([finality[randomResult]]);
-    }
+    
+    if (finality.length > 0) {
+      let randomResult = Math.floor(Math.random() * finality.length);
+      return formatResults([finality[randomResult]]);
+    } else {
+      return null;
+    }  
+  }
   
   export async function filterMealByCategory(category) {
   
@@ -64,8 +73,13 @@ export async function filterMealByArea(area) {
         promises.push(newResult.meals[0]);
     }
     const finality = await Promise.all(promises);
-    let randomResult = Math.floor(Math.random() * finality.length);
-    return formatResults([finality[randomResult]]);
+
+    if (finality.length > 0) {
+      let randomResult = Math.floor(Math.random() * finality.length);
+      return formatResults([finality[randomResult]]);
+    } else {
+      return null;
+    }  
   }
   
   
