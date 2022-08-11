@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 import { formatResults } from "./formatResults.js";
 
-
 //FILTER MEAL BY INGREDIENT AND CATEGORY
 export async function getMealByIngredients(ingredients, category) {
   console.log("Ingredients:", ingredients);
@@ -48,7 +47,6 @@ export async function getMealByIngredients(ingredients, category) {
   if (finalResult.length > 0) {
     return formatResults(finalResult);
   } else {
-    return null
+    return [];
   }
-  
 }
