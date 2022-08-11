@@ -39,19 +39,19 @@ async function getRandomMainMeal() {
   let recipeArray = promises.flat();
   if (recipeArray.length === 0) {
     return null;
-  } else { 
-  let randomResult = Math.floor(Math.random() * recipeArray.length);
-  const randomRecipe = recipeArray[randomResult].idMeal;
+  } else {
+    let randomResult = Math.floor(Math.random() * recipeArray.length);
+    const randomRecipe = recipeArray[randomResult].idMeal;
 
-  //Second fetch to get individual random result full recipe:
-  const finalRandomRecipe = await (
-    await fetch(
-      `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomRecipe}`
-    )
-  ).json();
+    //Second fetch to get individual random result full recipe:
+    const finalRandomRecipe = await (
+      await fetch(
+        `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomRecipe}`
+      )
+    ).json();
 
-  const selectedMeal = finalRandomRecipe.meals[0];
-  return formatResults([selectedMeal]);
+    const selectedMeal = finalRandomRecipe.meals[0];
+    return formatResults([selectedMeal]);
   }
 }
 
@@ -64,22 +64,21 @@ async function getRandomBreakfast() {
       "https://www.themealdb.com/api/json/v2/9973533/filter.php?c=Breakfast"
     )
   ).json();
-  if (recipeArray.length === 0) {
+  if (result.length === 0) {
     return null;
-  }
-  else{
-  let randomResult = Math.floor(Math.random() * result.meals.length); // calculate random index
+  } else {
+    let randomResult = Math.floor(Math.random() * result.meals.length); // calculate random index
 
-  //Second fetch to get individual random result full breakfast recipe:
-  const randomBreakfastId = result.meals[randomResult].idMeal;
-  const finalRandomRecipe = await (
-    await fetch(
-      `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomBreakfastId}`
-    )
-  ).json();
+    //Second fetch to get individual random result full breakfast recipe:
+    const randomBreakfastId = result.meals[randomResult].idMeal;
+    const finalRandomRecipe = await (
+      await fetch(
+        `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomBreakfastId}`
+      )
+    ).json();
 
-  const selectedMeal = finalRandomRecipe.meals[0];
-  return formatResults([selectedMeal]);
+    const selectedMeal = finalRandomRecipe.meals[0];
+    return formatResults([selectedMeal]);
   }
 }
 
@@ -90,21 +89,20 @@ async function getRandomDessert() {
       "https://www.themealdb.com/api/json/v2/9973533/filter.php?c=Dessert"
     )
   ).json();
-  if (recipeArray.length === 0) {
+  if (result.length === 0) {
     return null;
-  }
-  else{
-  let randomResult = Math.floor(Math.random() * result.meals.length); // calculate random index
+  } else {
+    let randomResult = Math.floor(Math.random() * result.meals.length); // calculate random index
 
-  //Second fetch to get individual random result full dessert recipe:
-  const randomDessertId = result.meals[randomResult].idMeal;
-  const finalRandomRecipe = await (
-    await fetch(
-      `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomDessertId}`
-    )
-  ).json();
+    //Second fetch to get individual random result full dessert recipe:
+    const randomDessertId = result.meals[randomResult].idMeal;
+    const finalRandomRecipe = await (
+      await fetch(
+        `https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=${randomDessertId}`
+      )
+    ).json();
 
-  const selectedMeal = finalRandomRecipe.meals[0];
-  return formatResults([selectedMeal]);
+    const selectedMeal = finalRandomRecipe.meals[0];
+    return formatResults([selectedMeal]);
   }
 }
