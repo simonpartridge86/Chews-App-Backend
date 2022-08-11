@@ -5,10 +5,13 @@ import { formatResults } from "./formatResults.js";
 
 export async function getRandomMeal(category) {
   if (category === "main") {
+    console.log("Search Random: Main");
     return await getRandomMainMeal();
   } else if (category === "breakfast") {
+    console.log("Search Random: Breakfast");
     return await getRandomBreakfast();
   } else if (category === "dessert") {
+    console.log("Search Random: Dessert");
     return await getRandomDessert();
   }
   return;
