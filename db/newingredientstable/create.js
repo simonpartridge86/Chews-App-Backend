@@ -1,10 +1,10 @@
 import { query } from "../index.js";
 
-// Construct a table with ingredient name and dietary preference columns
+// Constructs a table with ingredients and corresponding meal IDs
 
-export async function createIngredientsTable() {
+async function createIngredientsTable() {
   const sqlstring = `CREATE TABLE IF NOT EXISTS ingredients_new (
-      id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, name TEXT, mealindex TEXT []);`;
+      id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, name TEXT, mealindex TEXT);`;
   const res = await query(sqlstring);
   console.log(res.command, "table created");
 }
