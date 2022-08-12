@@ -27,8 +27,8 @@ async function fetchMealsByCategory(catList) {
       console.log("Updated with null:", dataReturn.rows[0].name);
     } else {
       let mealIds = [];
-      data.meals.map(async (ingr) => {
-        mealIds.push(ingr.idMeal);
+      data.meals.map(async (meal) => {
+        mealIds.push(meal.idMeal);
       });
       const dataReturn = await query(
         `INSERT INTO meal_categories(name, mealindex) VALUES ($1,$2) RETURNING name;`,
