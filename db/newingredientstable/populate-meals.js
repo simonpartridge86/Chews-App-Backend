@@ -31,7 +31,7 @@ const result = await ingredientsData.json();
 export async function populateIngredientsTable() {
   for (let i in await result.meals) {
     const res = await query(
-      `INSERT INTO ingredients(name) VALUES ($1) RETURNING*;`,
+      `INSERT INTO ingredients_new(name) VALUES ($1) RETURNING*;`,
       [result.meals[i].strIngredient]
     );
     console.log(res.rows[0].name, "inserted");

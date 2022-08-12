@@ -7,11 +7,9 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "create-ingredients": "node ./db/ingredients-table/create.js",
-    "populate-i": "node ./db/ingredients-table/populate.js",
-    "drop-i": "node ./db/ingredients-table/drop.js",
     "createIngredients": "node ./db/newingredientstable/create.js",
-    "populateIngredients": "node ./db/newingredientstable/populate.js",
+    "populateIngredients": "node ./db/newingredientstable/populate-ingredients.js",
+    "populateIngredientMeals": "node ./db/newingredientstable/populate-meals.js",
     "dropIngredients": "node ./db/newingredientstable/drop.js"
   },
   "type": "module",
