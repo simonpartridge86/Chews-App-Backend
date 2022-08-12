@@ -1,9 +1,12 @@
 import express, { Router } from "express";
-
 import { getMealByIngredients } from "../models/getMealByIngredients.js";
 import { getIngredients } from "../models/getIngredients.js";
 import { getRandomMeal } from "../models/getRandomMeal.js";
-import { filterMealByAreaAndCategory, filterMealByArea, filterMealByCategory } from "../models/getRandomMealByAreaAndCategory.js";
+import {
+  filterMealByAreaAndCategory,
+  filterMealByArea,
+  filterMealByCategory,
+} from "../models/getRandomMealByAreaAndCategory.js";
 
 const recipesRouter = express.Router();
 
@@ -36,7 +39,8 @@ recipesRouter.get("/ingredients-category", async function (req, res) {
 recipesRouter.get("/area-category", async function (req, res) {
   const area = req.query.area;
   const category = req.query.category;
-  console.log(area);
+  console.log("Area:", area);
+  console.log("Category:", category);
   if (area && category) {
     const result = await filterMealByAreaAndCategory(area, category);
     const responseObject = { success: true, payload: result };

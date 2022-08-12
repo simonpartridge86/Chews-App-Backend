@@ -83,6 +83,7 @@ export function formatResults(meals) {
       .split("\r\n")
       .filter((e) => e.length > 10);
 
+    console.log("Found:", formattedName);
     return {
       id: mealObject.idMeal,
       name: formattedName,
