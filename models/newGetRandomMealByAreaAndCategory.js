@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { query } from "../db/index.js";
 import { formatResults } from "./formatResults.js";
 import dotenv from "dotenv";
 dotenv.config();

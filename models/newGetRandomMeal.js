@@ -1,7 +1,10 @@
 import fetch from "node-fetch";
-import { formatResults } from "./formatResults.js";
+import { query } from "../db/index.js";
 import dotenv from "dotenv";
 dotenv.config();
+
+import { formatResults } from "./formatResults.js";
+
 const API_URL = process.env.MEALDB_URL;
 
 //GET RANDOM MEAL
@@ -22,77 +25,62 @@ export async function getRandomMeal(category) {
 
 // GET RANDOM MAIN
 async function getRandomMainMeal() {
-  //First fetch to get list of results:
-  const result = await Promise.all([
-    fetch(`${API_URL}filter.php?c=Seafood`),
-    fetch(`${API_URL}filter.php?c=Beef`),
-    fetch(`${API_URL}filter.php?c=Chicken`),
-    fetch(`${API_URL}filter.php?c=Vegetarian`),
-    fetch(`${API_URL}filter.php?c=Goat`),
-    fetch(`${API_URL}filter.php?c=Lamb`),
-    fetch(`${API_URL}filter.php?c=Pasta`),
-    fetch(`${API_URL}filter.php?c=Vegan`),
-  ]);
+  //Gets all meal IDs for main from Heroku database
+  const data = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = 'Main';`
+  );
+  const result = data.rows[0].mealindex;
+  const indexArray = result.split(",");
+  const randomNum = Math.floor(Math.random() * indexArray.length);
+  const randomMainIndex = indexArray[randomNum];
 
-  let promises = [];
-  for (let i in result) {
-    const newResult = await result[i].json();
-    promises.push(newResult.meals);
-  }
+  //Runs one fetch to get random main recipe
+  const randomMain = await (
+    await fetch(`${API_URL}lookup.php?i=${randomMainIndex}`)
+  ).json();
 
-  let recipeArray = promises.flat();
-  if (recipeArray.length === 0) {
-    return [];
-  } else {
-    let randomResult = Math.floor(Math.random() * recipeArray.length);
-    const randomRecipe = recipeArray[randomResult].idMeal;
-
-    //Second fetch to get individual random result full recipe:
-    const finalRandomRecipe = await (
-      await fetch(`${API_URL}lookup.php?i=${randomRecipe}`)
-    ).json();
-
-    const selectedMeal = finalRandomRecipe.meals[0];
-    return formatResults([selectedMeal]);
-  }
+  const selectedMeal = randomMain.meals[0];
+  return formatResults([selectedMeal]);
 }
 
 // This is the fetch for random breakfast
 
 //GET RANDOM BREAKFAST
 async function getRandomBreakfast() {
-  const result = await (await fetch(`${API_URL}filter.php?c=Breakfast`)).json();
-  if (result.length === 0) {
-    return [];
-  } else {
-    let randomResult = Math.floor(Math.random() * result.meals.length); // calculate random index
+  //Gets all meal IDs for breakfast from Heroku database
+  const data = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = 'Breakfast';`
+  );
+  const result = data.rows[0].mealindex;
+  const indexArray = result.split(",");
+  const randomNum = Math.floor(Math.random() * indexArray.length);
+  const randomBreakfastIndex = indexArray[randomNum];
 
-    //Second fetch to get individual random result full breakfast recipe:
-    const randomBreakfastId = result.meals[randomResult].idMeal;
-    const finalRandomRecipe = await (
-      await fetch(`${API_URL}lookup.php?i=${randomBreakfastId}`)
-    ).json();
+  //Runs one fetch to get random main recipe
+  const randomBreakfast = await (
+    await fetch(`${API_URL}lookup.php?i=${randomBreakfastIndex}`)
+  ).json();
 
-    const selectedMeal = finalRandomRecipe.meals[0];
-    return formatResults([selectedMeal]);
-  }
+  const selectedMeal = randomBreakfast.meals[0];
+  return formatResults([selectedMeal]);
 }
 
 //GET RANDOM DESSERT
 async function getRandomDessert() {
-  const result = await (await fetch(`${API_URL}filter.php?c=Dessert`)).json();
-  if (result.length === 0) {
-    return [];
-  } else {
-    let randomResult = Math.floor(Math.random() * result.meals.length); // calculate random index
+  //Gets all meal IDs for dessert from Heroku database
+  const data = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = 'Dessert';`
+  );
+  const result = data.rows[0].mealindex;
+  const indexArray = result.split(",");
+  const randomNum = Math.floor(Math.random() * indexArray.length);
+  const randomDessertIndex = indexArray[randomNum];
 
-    //Second fetch to get individual random result full dessert recipe:
-    const randomDessertId = result.meals[randomResult].idMeal;
-    const finalRandomRecipe = await (
-      await fetch(`${API_URL}lookup.php?i=${randomDessertId}`)
-    ).json();
+  //Runs one fetch to get random main recipe
+  const randomDessert = await (
+    await fetch(`${API_URL}lookup.php?i=${randomDessertIndex}`)
+  ).json();
 
-    const selectedMeal = finalRandomRecipe.meals[0];
-    return formatResults([selectedMeal]);
-  }
+  const selectedMeal = randomDessert.meals[0];
+  return formatResults([selectedMeal]);
 }

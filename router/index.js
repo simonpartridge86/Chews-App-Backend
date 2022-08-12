@@ -1,12 +1,12 @@
-import express, { Router } from "express";
-import { getMealByIngredients } from "../models/getMealByIngredients.js";
-import { getIngredients } from "../models/getIngredients.js";
-import { getRandomMeal } from "../models/getRandomMeal.js";
+import express from "express";
+import { getMealByIngredients } from "../models/newGetMealByIngredients.js";
+import { getIngredients } from "../models/newGetIngredients.js";
+import { getRandomMeal } from "../models/newGetRandomMeal.js";
 import {
   filterMealByAreaAndCategory,
   filterMealByArea,
   filterMealByCategory,
-} from "../models/getRandomMealByAreaAndCategory.js";
+} from "../models/newGetRandomMealByAreaAndCategory.js";
 
 const recipesRouter = express.Router();
 
