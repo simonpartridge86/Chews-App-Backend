@@ -37,8 +37,13 @@ recipesRouter.get("/ingredients-category", async function (req, res) {
 
 // FETCHES MEALS ACCORDING TO AREA AND MEAL CATEGORY
 recipesRouter.get("/area-category", async function (req, res) {
+  let category;
+  if (req.query.category === "Vegetarian") {
+    category = "veggie";
+  } else {
+    category = req.query.category;
+  }
   const area = req.query.area;
-  const category = req.query.category;
   console.log("Area:", area);
   console.log("Category:", category);
   if (area && category) {

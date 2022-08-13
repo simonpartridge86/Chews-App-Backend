@@ -55,6 +55,42 @@ async function createMainCategory() {
     [mainIds]
   );
   console.log("Updated with value:", mainReturn.rows[0].name);
+
+  createPescatarianCategory();
+}
+
+async function createPescatarianCategory() {
+  const dataReturn = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = 'Seafood' OR name = 'Vegan' OR name = 'Vegetarian';`
+  );
+  let mainIdsArray = [];
+  dataReturn.rows.map(async (cat) => {
+    mainIdsArray.push(cat.mealindex);
+  });
+  const mainIds = mainIdsArray.join(",");
+  const mainReturn = await query(
+    `INSERT INTO meal_categories(name, mealindex) VALUES ('Pescatarian',$1) RETURNING name;`,
+    [mainIds]
+  );
+  console.log("Updated with value:", mainReturn.rows[0].name);
+
+  createVegetarianCategory();
+}
+
+async function createVegetarianCategory() {
+  const dataReturn = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = 'Vegan' OR name = 'Vegetarian';`
+  );
+  let mainIdsArray = [];
+  dataReturn.rows.map(async (cat) => {
+    mainIdsArray.push(cat.mealindex);
+  });
+  const mainIds = mainIdsArray.join(",");
+  const mainReturn = await query(
+    `INSERT INTO meal_categories(name, mealindex) VALUES ('Veggie',$1) RETURNING name;`,
+    [mainIds]
+  );
+  console.log("Updated with value:", mainReturn.rows[0].name);
   console.log("POPULATED categories table");
 }
 

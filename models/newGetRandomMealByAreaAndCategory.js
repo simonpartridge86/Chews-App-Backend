@@ -7,64 +7,73 @@ const API_URL = process.env.MEALDB_URL;
 
 //FILTER MEAL BY AREA AND BY CATEGORY
 export async function filterMealByAreaAndCategory(area, category) {
-  //FIRST FETCH
-  const data = await fetch(`${API_URL}filter.php?a=${area}`);
-  const result = await data.json();
-  //SECOND FETCH
-  let promises = [];
-  for (let i in await result.meals) {
-    let id = result.meals[i].idMeal;
-    const newUrl = await fetch(`${API_URL}lookup.php?i=${id}`);
-    const newResult = await newUrl.json();
-    if (newResult.meals[0].strCategory === category) {
-      promises.push(newResult.meals[0]);
-    }
-  }
-  const finality = await Promise.all(promises);
-  console.log("Number of results:", finality.length);
-  if (finality.length > 0) {
-    let randomResult = Math.floor(Math.random() * finality.length);
-    return formatResults([finality[randomResult]]);
+  //GET MEAL IDS FOR AREA FROM DATABASE
+  const formattedArea = area[0].toUpperCase() + area.substring(1);
+  const areaData = await query(
+    `SELECT (mealindex) FROM meal_areas WHERE name = '${formattedArea}';`
+  );
+  const areaIds = areaData.rows[0].mealindex.split(",");
+
+  //GET MEAL IDS FOR CATEGORY FROM DATABASE
+  const formattedCat = category[0].toUpperCase() + category.substring(1);
+  const catData = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = '${formattedCat}';`
+  );
+  const catIds = catData.rows[0].mealindex.split(",");
+
+  let finalIds = areaIds.filter((value) => catIds.includes(value));
+
+  //IF MATCHES ARE FOUND, A RANDOM ID IS SEARCHED TO RETURN A MEAL
+
+  if (finalIds.length > 0) {
+    const randomNum = Math.floor(Math.random() * finalIds.length);
+    const randomIndex = finalIds[randomNum];
+    const result = await fetch(`${API_URL}lookup.php?i=${randomIndex}`);
+    const data = await result.json();
+    console.log("Number of results:", finalIds.length);
+    return formatResults(data.meals);
   } else {
     return [];
   }
 }
 
 export async function filterMealByArea(area) {
-  const data = await fetch(`${API_URL}filter.php?a=${area}`);
-  const result = await data.json();
-  let promises = [];
-  for (let i in await result.meals) {
-    let id = result.meals[i].idMeal;
-    const newUrl = await fetch(`${API_URL}lookup.php?i=${id}`);
-    const newResult = await newUrl.json();
-    promises.push(newResult.meals[0]);
-  }
-  const finality = await Promise.all(promises);
-  console.log("Number of results:", finality.length);
-  if (finality.length > 0) {
-    let randomResult = Math.floor(Math.random() * finality.length);
-    return formatResults([finality[randomResult]]);
+  //GET MEAL IDS FOR AREA FROM DATABASE
+  const formattedArea = area[0].toUpperCase() + area.substring(1);
+  const areaData = await query(
+    `SELECT (mealindex) FROM meal_areas WHERE name = '${formattedArea}';`
+  );
+  const areaIds = areaData.rows[0].mealindex.split(",");
+
+  //IF MATCHES ARE FOUND, A RANDOM ID IS SEARCHED TO RETURN A MEAL
+  if (areaIds.length > 0) {
+    const randomNum = Math.floor(Math.random() * areaIds.length);
+    const randomIndex = areaIds[randomNum];
+    const result = await fetch(`${API_URL}lookup.php?i=${randomIndex}`);
+    const data = await result.json();
+    console.log("Number of results:", areaIds.length);
+    return formatResults(data.meals);
   } else {
     return [];
   }
 }
 
 export async function filterMealByCategory(category) {
-  const data = await fetch(`${API_URL}filter.php?c=${category}`);
-  const result = await data.json();
-  let promises = [];
-  for (let i in await result.meals) {
-    let id = result.meals[i].idMeal;
-    const newUrl = await fetch(`${API_URL}lookup.php?i=${id}`);
-    const newResult = await newUrl.json();
-    promises.push(newResult.meals[0]);
-  }
-  const finality = await Promise.all(promises);
-  console.log("Number of results:", finality.length);
-  if (finality.length > 0) {
-    let randomResult = Math.floor(Math.random() * finality.length);
-    return formatResults([finality[randomResult]]);
+  //GET MEAL IDS FOR CATEGORY FROM DATABASE
+  const formattedCat = category[0].toUpperCase() + category.substring(1);
+  const catData = await query(
+    `SELECT (mealindex) FROM meal_categories WHERE name = '${formattedCat}';`
+  );
+  const catIds = catData.rows[0].mealindex.split(",");
+
+  //IF MATCHES ARE FOUND, A RANDOM ID IS SEARCHED TO RETURN A MEAL
+  if (catIds.length > 0) {
+    const randomNum = Math.floor(Math.random() * catIds.length);
+    const randomIndex = catIds[randomNum];
+    const result = await fetch(`${API_URL}lookup.php?i=${randomIndex}`);
+    const data = await result.json();
+    console.log("Number of results:", catIds.length);
+    return formatResults(data.meals);
   } else {
     return [];
   }
