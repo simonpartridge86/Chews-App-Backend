@@ -7,10 +7,15 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "create-i": "node ./db/ingredients-table/create.js",
-    "populate-i": "node ./db/ingredients-table/populate.js",
-    "drop-i": "node ./db/ingredients-table/drop.js",
-    "dietary-i": "node ./db/ingredients-table/modifyDietaryData.js"
+    "createIng": "node ./db/newingredientstable/create.js",
+    "populateIng": "node ./db/newingredientstable/populate.js",
+    "dropIng": "node ./db/newingredientstable/drop.js",
+    "createCat": "node ./db/categoriestable/create.js",
+    "populateCat": "node ./db/categoriestable/populate.js",
+    "dropCat": "node ./db/categoriestable/drop.js",
+    "createArea": "node ./db/areastable/create.js",
+    "populateArea": "node ./db/areastable/populate.js",
+    "dropArea": "node ./db/areastable/drop.js"
   },
   "type": "module",
   "repository": {
