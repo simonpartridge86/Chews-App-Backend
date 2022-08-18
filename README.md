@@ -21,7 +21,7 @@ For details about the project front-end and app design, please see the correspon
 
 ## Description
 
-This repo contains details of the server and database created for Chews app, including API routes, PostgreSQL queries, and tests. Our API routes are connected to a Heroku database and requested data is sent to the frond-end via various GET routes. Each GET route is distilled by our server into a single fetch request to an external API, [TheMealDB API](https://www.themealdb.com/api.php), to obtain recipe data.
+This repo contains details of the server and database created for Chews app, including API routes, PostgreSQL queries, and tests. Our API routes are connected to a Heroku database and requested data is sent to the front-end via various GET routes. Each GET route is distilled by our server into a single fetch request to an external API, [TheMealDB API](https://www.themealdb.com/api.php), to obtain recipe data.
 
 The backend can be tested in deployment [here](https://chews-backend.herokuapp.com/).
 
