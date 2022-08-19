@@ -32,7 +32,7 @@ test('expects ingredient search for plastics to return an empty array', async ()
 });
 
 describe ('Random meal tests', () => {
-    test('expects random meals to be random meals', async () => {
+    test('expects random main meal to return successfully', async () => {
         //ARRANGE
         const actual = await getRandomMeal('main');
         //ACT
@@ -41,7 +41,7 @@ describe ('Random meal tests', () => {
         expect(actual).toEqual(expected);
         });
 
-    test('expects random meals to be random meals', async () => {
+    test('expects random meals return to have an id of string type', async () => {
         //ARRANGE
         const actual = await getRandomMeal('main');
         //ACT
@@ -50,7 +50,7 @@ describe ('Random meal tests', () => {
         expect(actual[0].id).toEqual(expected);
         });
 
-    test('expects random meals to be random meals', async () => {
+    test('expects random meal of no valid category to return undefined', async () => {
         //ARRANGE
         const actual = await getRandomMeal('laptop');
         //ACT
