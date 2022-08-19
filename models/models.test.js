@@ -12,7 +12,7 @@ test('expects ingredient search for cucumber to return an array containing cucum
     expect(actual).toEqual(expected);
 });
 
-test('expects ingredient search for beans to return an array containing beans', async () => {
+test('expects ingredient search for bean to return an array containing bean', async () => {
     //ARRANGE
     const actual = await getIngredients('bean');
     //ACT

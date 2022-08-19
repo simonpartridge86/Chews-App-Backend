@@ -24,7 +24,28 @@ test('See if get ingredients route for cucumber returns a Cucumber', async () =>
     .get('/ingredients-list/cucumber')
     .expect({success: true, payload: ["Cucumber",]})
     .expect(200);
-})
+});
 
+test('See if get ingredients route for beans returns a beans', async () => {
+    app.get('/ingredients-list/bean', function(req, res) {
+       res.status(200);
+    }); 
+    
+    await request(app)
+    .get('/ingredients-list/bean')
+    .expect({success: true, payload: ["Bean Sprouts",]})
+    .expect(200);
+});
+
+test('See if get ingredients route for plastics returns empty array', async () => {
+    app.get('/ingredients-list/plastics', function(req, res) {
+       res.status(200);
+    }); 
+    
+    await request(app)
+    .get('/ingredients-list/plastics')
+    .expect({success: true, payload: []})
+    .expect(200);
+});
     
   
