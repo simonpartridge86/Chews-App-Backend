@@ -1,6 +1,8 @@
 import { getIngredients } from './getIngredients.js';
 import { test,expect } from '@jest/globals';
 
+
+describe ('Ingredient search tests', () => {
 test('expects ingredient search for cucumber to return an array containing cucumber', async () => {
     //ARRANGE
     const actual = await getIngredients('cucumber');
@@ -17,4 +19,5 @@ test('expects ingredient search for beans to return an array containing beans', 
     const expected = ["Bean Sprouts",]; 
     //ASSERT
     expect(actual).toEqual(expected);
+})
 });
