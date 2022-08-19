@@ -20,4 +20,14 @@ test('expects ingredient search for beans to return an array containing beans', 
     //ASSERT
     expect(actual).toEqual(expected);
 })
+
+test('expects ingredient search for plastics to return an empty array', async () => {
+    //ARRANGE
+    const actual = await getIngredients('plastics');
+    //ACT
+    const expected = []; 
+    //ASSERT
+    expect(actual).toEqual(expected);
+})
 });
+
