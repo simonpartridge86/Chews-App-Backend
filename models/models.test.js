@@ -76,5 +76,14 @@ describe ('Random meal tests', () => {
         //ASSERT
         expect(actual[0].image).toEqual(expected);
         });
+
+    test('expects random meals return to have ingredients of type array', async () => {
+            //ARRANGE
+            const actual = await getRandomMeal('main');
+            //ACT
+            const expected = expect.any(Array);
+            //ASSERT
+            expect(actual[0].ingredients).toEqual(expected);
+            });
     
     });
