@@ -47,5 +47,24 @@ test('See if get ingredients route for plastics returns empty array', async () =
     .expect({success: true, payload: []})
     .expect(200);
 });
-    
+   
+//MEAL RESULT TESTING
+// test('See if we get a random meal object', async () => {
+//     app.get('/random-meal?meal=main', function(req, res) {
+//        res.status(200);
+//     });
+//     await request(app)
+//     .get('/random-meal?meal=main')
+//     .expect({success: true, payload: [
+//         {
+//           id: expect.any(String),
+//           name: expect.any(String),
+//           ingredients: expect.any(Array),
+//           measures: expect.any(Array),
+//           image: expect.any(String),
+//           instructions: expect.any(Array)
+//         }
+//       ]})
+//     .expect(200);
+// });
   
