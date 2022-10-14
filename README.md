@@ -4,7 +4,7 @@
 
 This is the back-end repo for "Chews", a mobile-first web app made as part of final project month at the [School of Code](https://www.schoolofcode.co.uk/) bootcamp (August 2022) by [Simon Partridge](https://github.com/simonpartridge86), [Adam Phasey](https://github.com/AdamPhasey), [Sam Wylie](https://github.com/samsonhumber), [Maurizio Monti](https://github.com/mauriziomonti), [Kunal Shukla](https://github.com/kun-shukla) and [Mino Devito](https://github.com/MagicMino).
 
-For details about the project front-end and app design, please see the corresponding [front-end repo here](https://github.com/simonpartridge86/baristacrats-frontend-final-project).
+For details about the project front-end and app design, please see the corresponding [front-end repo here](https://github.com/simonpartridge86/Chews-App-Frontend).
 
 ---
 
