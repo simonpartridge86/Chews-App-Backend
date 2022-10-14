@@ -1,142 +1,182 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://github.com/mauriziomonti/baristacrats-backend-final-project.git)
 
-# Backend for Chews 
+# Backend for "Chews" App
 
-This is the repo for our server and database, where we have built the API routes, postgresql queries and tests. Our API CRUD routes are connected to our database (Heroku) and the data is fed to our frond end via the GET routes.
+This is the back-end repo for "Chews", a mobile-first web app made as part of final project month at the [School of Code](https://www.schoolofcode.co.uk/) bootcamp (August 2022) by [Simon Partridge](https://github.com/simonpartridge86), [Adam Phasey](https://github.com/AdamPhasey), [Sam Wylie](https://github.com/samsonhumber), [Maurizio Monti](https://github.com/mauriziomonti), [Kunal Shukla](https://github.com/kun-shukla) and [Mino Devito](https://github.com/MagicMino).
+
+For details about the project front-end and app design, please see the corresponding [front-end repo here](https://github.com/simonpartridge86/baristacrats-frontend-final-project).
+
+---
+
+## Index
+
+- [Description](#description)
+- [Back-End Tools](#back-end-tools)
+- [API Reference](#api-reference)
+- [Run Locally](#run-locally)
+- [Database Setup](#database-setup)
+- [Support and Feedback](#support-and-feedback)
+
+---
 
 ## Description
 
-  ## Problem
-  “With the COVID pandemic and now the cost of living crisis, many people have been cooking at home more than ever. However, having to come up with         interesting recipes for the ingredients you have, sometimes multiple times per day, can lead to decision fatigue and sap the joy out of home cooking”.
+This repo contains details of the server and database created for Chews app, including API routes, PostgreSQL queries, and tests. Our API routes are connected to a Heroku database and requested data is sent to the front-end via various GET routes. Each GET route is distilled by our server into a single fetch request to an external API, [TheMealDB API](https://www.themealdb.com/api.php), to obtain recipe data.
 
-  ## Solution
-  “Chews” is a web app that helps you easily choose a meal recipe to make at home, taking the tiresome decision-making out of your hands.
+The backend can be tested in deployment [here](https://chews-backend.herokuapp.com/).
 
+---
 
-## Features of MVP
-- Login/Sign up for new users
-- Meal type selection page
-- Search by items page
-- Result page to display recepet selection
-- Display full recepet with the instructions
-- Save favourite recepet and display page
+## Back-End Tools
 
+![Back-end tools](./images/backend-tech.png)
 
-[Link to Frontend](https://github.com/simonpartridge86/baristacrats-frontend-final-project)
+We chose to construct our back-end using technologies learned during the School of Code bootcamp, namely Node.js, Express, PostgreSQL, and Heroku. This helped to consolidate our learning from the bootcamp process.
 
+Heroku was used for both database hosting and back-end deployment.
+
+---
 
 ## API Reference
 
-#### PORT Used: 3000
+**_Get ingredients_**
 
-#### User
+Fetches related ingredients from database based on partial ingredient name input.
 
-| Method | Path                 | Additional Info | Result                                    | Response                                    |
-| ------ | -------------------- | --------------- | ----------------------------------------- | ------------------------------------------- |
-| GET    | ~/users/userid     |                 | Specific user details                     |{success: true, payload: user details object} |
-| POST   | ~/users              | {name: string, dietary-preferences: [strings], ?image-link: string, ?nationality: string} | User profile created           |{success: true, payload: {userid: userid}}        |{success: true, payload: {userid: <userid>}}                                        |                                             |
-| PUT    | ~/users/userid     | {name: string, dietary-preferences: [strings], ?image-link: string, ?nationality: string} |User details updated|{success: true, payload: “user profile updated”|
-| DELETE | ~/users/userid    |   |User of specified id deleted|{success: true, payload: “user profile deleted”
-
-
-
-
-
-
-
-#### Recipes
-
-| Method | Path                 | Additional Info | Result                                    | Response                                    |
-| ------ | -------------------- | --------------- | ----------------------------------------- | ------------------------------------------- |
-| GET    | ~/users/recipes/userid             |{favourites: [{recipeid: number, title: string, imageURL: string}]}                 | Specific saved recipes                                | {success: true, payload: user collected recipes}    |
-| POST   | ~/users/recipes      | {userid: number, favourites: [{recipeid: number, title: string, imageURL: string}]} | User profile created                          |{success: true, payload: “${name}’s profile created”}|
-| PUT    | ~/users/recipes/userid |{userid: number, favourites: [{recipeid: number, title: string, imageURL: string}]} |User details updated                        |{success: true, payload: “${name}’s  profile updated”|
-| DELETE | ~/users/recipes/userid  |                 | User of specified id deleted         | {success: true, payload: “${name}’s profile deleted”       |
-
-
-## Tech Stack
-
-**Database:** Heroku
-
-**Server:** Node, Express, Nodemon, pg, dotenv (****cors**** to review)
-
-
-## Running Tests. (**not defined yet**)
-
-To run tests, run the following command
-
-```bash
-  npm run test
+```http
+  GET ~/ingredients-list/:id
 ```
 
+| Parameter | Type     | Description                                          |
+| :-------- | :------- | :--------------------------------------------------- |
+| `id`      | `string` | **Required**: id (partial ingredient name as string) |
 
+**_Get random meal_**
+
+Fetches a random meal based on meal-type input (breakfast, main, or dessert).
+
+```http
+  GET ~/random-meal
+```
+
+| Parameter | Type    | Description                                       |
+| :-------- | :------ | :------------------------------------------------ |
+| `meal`    | `query` | **Required**: meal query (e.g. "?meal=breakfast") |
+
+**_Get meal by ingredients_**
+
+Fetches a random meal based on meal-type (breakfast, main, or dessert) and ingredients inputs.
+
+```http
+  GET ~/ingredients-category
+```
+
+| Parameter     | Type    | Description                                                          |
+| :------------ | :------ | :------------------------------------------------------------------- |
+| `category`    | `query` | **Required**: category query (e.g. "?category=breakfast")            |
+| `ingredients` | `query` | **Required**: ingredients query (e.g. "?ingredients=chicken,garlic") |
+
+**_Get meal by area and/or category_**
+
+Fetches a random meal based on cuisine area (e.g. "Italian") and/or diet category (e.g. "Vegetarian").
+
+```http
+  GET ~/area-category
+```
+
+| Parameter  | Type    | Description                                           |
+| :--------- | :------ | :---------------------------------------------------- |
+| `area`     | `query` | **Required**: area query (e.g. "?area=Italian")       |
+| `category` | `query` | **Required**: category query (e.g. "?category=Vegan") |
+
+---
 
 ## Run Locally
 
-Clone the project
+To install and run this backend locally, please follow these steps:
+
+Clone the project:
 
 ```bash
-  https://github.com/mauriziomonti/baristacrats-backend-final-project.git
+git clone https://github.com/AdamPhasey/baristacrats-backend-repo.git
 ```
 
-Install dependencies
+Install dependencies and start the server:
 
 ```bash
-  npm install
+npm install
+npm run dev
 ```
 
-Start the server
+The server is setup to run locally on localhost:3000.
+
+---
+
+## Database Setup
+
+Create a ".env" file and add the required environment variables:
+
+```
+  MEALDB_URL: <URL for TheMealDB API>
+  PG_URL: <database connection URL>
+```
+
+_NB. The following test URL can be used to access TheMealDB API for free (paid keys are also available):_
+
+```http
+"www.themealdb.com/api/json/v1/1"
+```
+
+Next, run the following scripts to create, populate, or drop the required tables on your own database:
+
+**_Ingredients Table_**
+
+Stores ingredients from TheMealDB API and their corresponding meal IDs.
 
 ```bash
-  npm run dev
+  npm run createIng
+  npm run populateIng
+  npm run dropIng
 ```
 
-#### Database Documentation
+**_Categories Table_**
 
-Create .env file. (To decide which configuration below to be used)
+Stores meal categories from TheMealDB API and their corresponding meal IDs.
 
-```
-PGPORT=<Your database port>
-PGHOST=<Your database host>
-PGDATABASE=<Your database reference>
-PGUSER=<Your database username>
-PGPASSWORD=<Your database password>
-
-PGCONNECTIONSTRING=<Connection string provided>
+```bash
+  npm run createCat
+  npm run populateCat
+  npm run dropCat
 ```
 
-Run these scripts to create the tables on your database:
+**_Areas Table_**
 
-***User***
-```
-    npm run <db drop functionality>
-    npm run  <db create functionality>
-    npm run  <db populate functionality>
-```
-***Recipes***
-```
-    npm run <db drop functionality>
-    npm run  <db create functionality>
-    npm run  <db populate functionality>
+Stores cuisine areas from TheMealDB API and their corresponding meal IDs.
+
+```bash
+  npm run createArea
+  npm run populateArea
+  npm run dropArea
 ```
 
+---
 
-## Authors
+## Support and Feedback
 
-- [@Adam Phasey](https://github.com/AdamPhasey)
+To receive support or give feedback, please contact team members through the details provided on their Github profiles:
 
-- [@mauriziomonti](https://github.com/mauriziomonti)
+[@Simon Partridge](https://github.com/simonpartridge86)
 
-- [@MagicMino](https://github.com/MagicMino)
+[@Adam Phasey](https://github.com/AdamPhasey)
 
-- [@simonpartridge86](https://github.com/simonpartridge86)
+[@Sam Wylie](https://github.com/samsonhumber)
 
-- [@kun-shukla](https://github.com/kun-shukla)
+[@Maurizio Monti](https://github.com/mauriziomonti)
 
+[@Kunal Shukla](https://github.com/kun-shukla)
 
+[@Mino Devito](https://github.com/MagicMino)
 
+<br>
 
-
-
-
-
+[--Return to Index](#index)
