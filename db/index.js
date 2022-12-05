@@ -11,7 +11,7 @@ dotenv.config();
 //   ssl: { rejectUnauthorized: false },
 // });
 
-const connectionString = process.env.PG_URL;
+const connectionString = process.env.DATABASE_URL;
 
 export const pool = new pg.Pool({
   connectionString,
