@@ -20,14 +20,14 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mauriziomonti/Baristacrats-backend-final-project.git"
+    "url": "git+https://github.com/simonpartridge86/Chews-App-Backend.git"
   },
   "author": "The Baristacrats",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mauriziomonti/Baristacrats-backend-final-project/issues"
+    "url": "https://github.com/simonpartridge86/Chews-App-Backend/issues"
   },
-  "homepage": "https://github.com/mauriziomonti/Baristacrats-backend-final-project#readme",
+  "homepage": "https://github.com/simonpartridge86/Chews-App-Backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
