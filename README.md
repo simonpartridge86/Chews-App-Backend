@@ -78,7 +78,7 @@ Fetches a random meal based on meal-type (breakfast, main, or dessert) and ingre
 
 **_Get meal by area and/or category_**
 
-Fetches a random meal based on cuisine area (e.g. "Italian") and/or diet category (e.g. "Vegetarian").
+Fetches a random meal based on cuisine area (e.g. "Italian") and/or diet category (e.g. "Vegan").
 
 ```http
   GET ~/area-category
